@@ -34,7 +34,7 @@ var last='';
 function clean(t){return t.replace(/\s*[\(\[][^\)\]]*(video|vídeo|oficial|official|lyric|audio|letra|visualizer|4k|hd)[^\)\]]*[\)\]]/ig,'').replace(/\s*\|.*$/,'').trim()}
 var LR={id:null,lines:null,busy:false};
 function lyr(id,T,A,v){
-  var cp=window.__cap;if(cp&&LR.id!==cp.id&&!LR.busy){id=cp.id;
+  var cp=window.__cap;if(cp&&cp.id===id&&LR.id!==id&&!LR.busy){
     LR={id:id,lines:null,busy:true};
     var tr=cp.tr.filter(function(x){return x.kind!=='asr'})[0]||cp.tr[0];
     if(!tr||!tr.baseUrl){LR.lines=[];LR.busy=false;return}
@@ -47,7 +47,7 @@ function lyr(id,T,A,v){
 function lshow(){
   var el=document.getElementById('mp');if(!el||el.style.display==='none')return;var v=document.querySelector('video');if(!v)return;
   var p=el.querySelectorAll('.lp'),c=el.querySelector('.lc');
-  if(!LR.lines||!LR.lines.length){p[0].textContent='DBG cap='+(window.__cap?window.__cap.id+' n'+window.__cap.tr.length:'none')+' lr='+(LR.lines?LR.lines.length:'null')+' vid='+vid()+' id='+LR.id;p[1].textContent='';c.textContent='';return}
+  if(!LR.lines||!LR.lines.length){p[0].textContent='';p[1].textContent='';c.textContent='';return}
   var ct=v.currentTime+0.15,k=-1;for(var i=0;i<LR.lines.length;i++){if(LR.lines[i][0]<=ct)k=i;else break}
   if(k>=0&&ct>LR.lines[k][2]+1)k=-1;
   var np=k>0?LR.lines[k-1][1]:'',nc=k>=0?LR.lines[k][1]:'',nn=LR.lines[k+1]?LR.lines[k+1][1]:'';
@@ -68,7 +68,7 @@ function tick(){
   var wp=document.querySelector('ytlr-watch-page'),tx=[];
   if(wp){var w2=document.createTreeWalker(wp,NodeFilter.SHOW_TEXT),n2;while((n2=w2.nextNode())&&tx.length<2){var t2=n2.nodeValue.trim();if(t2.length>2)tx.push(t2)}}
   var T=tx[0]||'',A=(tx[1]||'').replace(/ - Topic$/,'').replace(/VEVO$/i,'');
-  el.querySelector('.t').textContent=clean(T);el.querySelector('.a').textContent=A;
+  el.querySelector('.t').textContent=clean(T);el.querySelector('.a').textContent=(A&&A!==T&&A!==clean(T))?A:'';
   lyr(id,T,A,v);
   var p=v.duration>0?v.currentTime/v.duration*100:0;
   el.querySelector('.bar i').style.width=p+'%';
