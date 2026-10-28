@@ -54,7 +54,7 @@ setInterval(tick,500);
 // solo musica: oculta el resto del menu y abre Musica
 function key(code,name){['keydown','keyup'].forEach(function(t){var e=new KeyboardEvent(t,{key:name,code:name,keyCode:code,which:code,bubbles:true,cancelable:true});try{Object.defineProperty(e,'keyCode',{get:function(){return code}});Object.defineProperty(e,'which',{get:function(){return code}})}catch(x){}(document.activeElement||document.body).dispatchEvent(e);document.dispatchEvent(new KeyboardEvent(t,{key:name,keyCode:code,which:code,bubbles:true}))})}
 function foc(){var f=document.querySelector('[class*=zylon-focus],[class*=focused]');var a=document.activeElement;return (f?f.tagName.slice(0,22)+':'+(f.textContent||'').trim().slice(0,14):'nofocusel')+' act='+(a?a.tagName.slice(0,22):'')}
-function keyseq(){setTimeout(function(){key(37,'ArrowLeft');L('after LEFT '+foc())},2500);setTimeout(function(){key(40,'ArrowDown');L('after DOWN '+foc())},3500);setTimeout(function(){key(40,'ArrowDown');L('after DOWN2 '+foc())},4500)}
+function keyseq(){var t=2500;setTimeout(function(){key(37,'ArrowLeft')},t);t+=1000;for(var i=0;i<4;i++){(function(){setTimeout(function(){key(40,'ArrowDown')},t)})();t+=600}t+=700;setTimeout(function(){key(13,'Enter');L('enter sent')},t)}
 var opened=false,keep={Music:1,Settings:1,Search:1};
 function guide(){
   var es=document.querySelectorAll('ytlr-guide-entry-renderer');
