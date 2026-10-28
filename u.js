@@ -1,5 +1,5 @@
 (function(){
-var T0=Date.now();function L(m){try{console.log('M '+m)}catch(e){}}
+var T0=Date.now();var LG=[];function L(m){try{console.error('M '+m);LG.push(m);if(LG.length>14)LG.shift();var d=document.getElementById('mlog');if(!d&&document.body){d=document.createElement('pre');d.id='mlog';d.style.cssText='position:fixed;left:0;bottom:0;z-index:99999;background:rgba(0,0,0,.8);color:#0f0;font:16px monospace;margin:0;padding:6px;max-width:1500px;white-space:pre-wrap';document.body.appendChild(d)}if(d)d.textContent=LG.join('\n')}catch(e){}}
 function chain(el){var a=[];var n=0;while(el&&el!==document.body&&n++<12){a.push(el.tagName.toLowerCase()+(el.id?'#'+el.id:'')+(typeof el.className=='string'&&el.className?'.'+el.className.trim().split(/\s+/).slice(0,2).join('.'):''));el=el.parentElement}return a.join(' < ')}
 function probe(){
  try{
