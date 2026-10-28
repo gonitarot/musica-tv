@@ -59,8 +59,10 @@ function keyseq(){var step=0;setTimeout(function(){key(37,'ArrowLeft');var iv=se
 var T0=Date.now(),navDone=false,opened=false,keep={Music:1,Settings:1,Search:1};
 function guide(){
   var es=document.querySelectorAll('ytlr-guide-entry-renderer');
-  if(!navDone&&Date.now()-T0<30000&&!/FEtopics_music/.test(location.hash))return;navDone=true;es.forEach(function(e){var t=(e.textContent||'').trim();if(t&&!keep[t])e.style.display='none'});
-  if(!opened&&es.length&&(location.hash===''||location.hash==='#/')){opened=true;keyseq()}
+  if(!es.length)return;
+  if(!opened&&(location.hash===''||location.hash==='#/')){opened=true;keyseq()}
+  if(!navDone){if(/FEtopics_music/.test(location.hash)||Date.now()-T0>35000)navDone=true;else return}
+  es.forEach(function(e){var t=(e.textContent||'').trim();if(t&&!keep[t])e.style.display='none'});
 }
 setInterval(function(){try{guide()}catch(e){L('guide err '+e)}},1000);setInterval(function(){try{tick()}catch(e){L('tick err '+e)}},1500);L('music.js ok');
 L('music.js ok');
