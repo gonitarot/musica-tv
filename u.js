@@ -1,6 +1,6 @@
 (function(){
 if(window.__musica)return;window.__musica=1;
-function L(m){try{console.error('M '+m)}catch(e){}}
+function L(m){try{console.error('M '+m);var d=document.getElementById('mdbg');if(!d&&document.body){d=document.createElement('div');d.id='mdbg';d.style.cssText='position:fixed;left:0;top:0;z-index:99999;background:#c00;color:#fff;font:18px monospace;padding:3px;max-width:1000px';document.body.appendChild(d)}if(d)d.textContent=String(m).slice(0,220)}catch(e){}}
 var css=`
 #mp{position:fixed;inset:0;z-index:9999;display:none;overflow:hidden;background:#0b0b0f;font-family:Roboto,Arial,sans-serif;color:#fff}
 #mp .bg{position:absolute;inset:-60px;background-size:cover;background-position:center;filter:blur(60px) saturate(1.6) brightness(.55);transform:scale(1.15);transition:background-image .6s}
@@ -52,6 +52,7 @@ function tick(){
   el.querySelector('.c').textContent=f(v.currentTime);el.querySelector('.d').textContent=f(v.duration);
   el.className=v.paused?'paused':'';
   el.querySelector('.st').textContent=v.paused?'Pausado':'Reproduciendo';
+  if(!window.__dd||Date.now()-window.__dd>2000){window.__dd=Date.now();L('tick id='+id+' h='+location.hash.slice(0,60)+' vd='+JSON.stringify(vd).slice(0,80)+' ct='+Math.round(v.currentTime)+' dur='+Math.round(v.duration))}
 }
 setInterval(tick,500);
 // solo musica: oculta el resto del menu y abre Musica
@@ -59,7 +60,7 @@ var opened=false,keep={Music:1,Settings:1,Search:1};
 function guide(){
   var es=document.querySelectorAll('ytlr-guide-entry-renderer');
   es.forEach(function(e){var t=(e.textContent||'').trim();if(t&&!keep[t])e.style.display='none'});
-  if(!opened&&es.length&&(location.hash===''||location.hash==='#/'||/^#\/(home|browse\?c=FEwhat_to_watch)/.test(location.hash))){opened=true;location.hash='#/browse?c=FEtopics_music';L('open music')}
+  if(!opened&&es.length&&(location.hash===''||location.hash==='#/'||/^#\/(home|browse\?c=FEwhat_to_watch)/.test(location.hash))){opened=true;location.hash='#/browse?c=FEtopics_music';L('open music h='+location.hash)}
 }
 setInterval(function(){try{guide()}catch(e){L('guide err '+e)}},1000);setInterval(function(){try{tick()}catch(e){L('tick err '+e)}},1500);L('music.js ok');
 L('music.js ok');
