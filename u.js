@@ -54,11 +54,11 @@ setInterval(tick,500);
 // solo musica: oculta el resto del menu y abre Musica
 function key(code,name){['keydown','keyup'].forEach(function(t){var e=new KeyboardEvent(t,{key:name,code:name,keyCode:code,which:code,bubbles:true,cancelable:true});try{Object.defineProperty(e,'keyCode',{get:function(){return code}});Object.defineProperty(e,'which',{get:function(){return code}})}catch(x){}(document.activeElement||document.body).dispatchEvent(e)})}
 function foc(){var f=document.querySelector('[class*=zylon-focus],[class*=focused]');var a=document.activeElement;return (f?f.tagName.slice(0,22)+':'+(f.textContent||'').trim().slice(0,14):'nofocusel')+' act='+(a?a.tagName.slice(0,22):'')}
-function keyseq(){var t=2500;setTimeout(function(){key(37,'ArrowLeft')},t);t+=1200;for(var i=0;i<4;i++){(function(){setTimeout(function(){key(40,'ArrowDown')},t)})();t+=700}t+=800;setTimeout(function(){key(13,'Enter')},t)}
-var opened=false,keep={Music:1,Settings:1,Search:1};
+function keyseq(){var t=2500;setTimeout(function(){key(37,'ArrowLeft')},t);t+=1500;for(var i=0;i<4;i++){(function(){setTimeout(function(){key(40,'ArrowDown')},t)})();t+=800}t+=800;setTimeout(function(){key(13,'Enter')},t)}
+var T0=Date.now(),navDone=false,opened=false,keep={Music:1,Settings:1,Search:1};
 function guide(){
   var es=document.querySelectorAll('ytlr-guide-entry-renderer');
-  es.forEach(function(e){var t=(e.textContent||'').trim();if(t&&!keep[t])e.style.display='none'});
+  if(!navDone&&Date.now()-T0<30000&&!/FEtopics_music/.test(location.hash))return;navDone=true;es.forEach(function(e){var t=(e.textContent||'').trim();if(t&&!keep[t])e.style.display='none'});
   if(!opened&&es.length&&(location.hash===''||location.hash==='#/')){opened=true;keyseq()}
 }
 setInterval(function(){try{guide()}catch(e){L('guide err '+e)}},1000);setInterval(function(){try{tick()}catch(e){L('tick err '+e)}},1500);L('music.js ok');
