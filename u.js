@@ -48,15 +48,18 @@ function tick(){
   el.querySelector('.c').textContent=f(v.currentTime);el.querySelector('.d').textContent=f(v.duration);
   el.querySelector('.art').style.transform=v.paused?'scale(.9)':'none';
   el.querySelector('.st').textContent=v.paused?'Pausado':'Reproduciendo';
-  if(!window.__dd||Date.now()-window.__dd>2000){window.__dd=Date.now();var tg={};document.querySelectorAll('*').forEach(function(e){if(e.tagName.indexOf('YTLR')==0)tg[e.tagName.slice(5).toLowerCase()]=1});L('raw='+window.__vdraw+' tags='+Object.keys(tg).filter(function(k){return /watch|player|title|meta|lyric|queue/.test(k)}).join(',')+' tick id='+id+' h='+location.hash.slice(0,60)+' vd='+JSON.stringify(vd).slice(0,80)+' ct='+Math.round(v.currentTime)+' dur='+Math.round(v.duration))}
+  if(!window.__dd||Date.now()-window.__dd>2000){window.__dd=Date.now();var wp=document.querySelector('ytlr-watch-page');var tx=[];if(wp){var w2=document.createTreeWalker(wp,NodeFilter.SHOW_TEXT);var n2;while((n2=w2.nextNode())&&tx.length<8){var t2=n2.nodeValue.trim();if(t2.length>2)tx.push(t2.slice(0,40))}}L('wtxt='+tx.join(' | '));var tg={};document.querySelectorAll('*').forEach(function(e){if(e.tagName.indexOf('YTLR')==0)tg[e.tagName.slice(5).toLowerCase()]=1});L('raw='+window.__vdraw+' tags='+Object.keys(tg).filter(function(k){return /watch|player|title|meta|lyric|queue/.test(k)}).join(',')+' tick id='+id+' h='+location.hash.slice(0,60)+' vd='+JSON.stringify(vd).slice(0,80)+' ct='+Math.round(v.currentTime)+' dur='+Math.round(v.duration))}
 }
 setInterval(tick,500);
 // solo musica: oculta el resto del menu y abre Musica
+function key(code,name){['keydown','keyup'].forEach(function(t){var e=new KeyboardEvent(t,{key:name,code:name,keyCode:code,which:code,bubbles:true,cancelable:true});try{Object.defineProperty(e,'keyCode',{get:function(){return code}});Object.defineProperty(e,'which',{get:function(){return code}})}catch(x){}(document.activeElement||document.body).dispatchEvent(e);document.dispatchEvent(new KeyboardEvent(t,{key:name,keyCode:code,which:code,bubbles:true}))})}
+function foc(){var f=document.querySelector('[class*=zylon-focus],[class*=focused]');var a=document.activeElement;return (f?f.tagName.slice(0,22)+':'+(f.textContent||'').trim().slice(0,14):'nofocusel')+' act='+(a?a.tagName.slice(0,22):'')}
+function keyseq(){setTimeout(function(){key(37,'ArrowLeft');L('after LEFT '+foc())},2500);setTimeout(function(){key(40,'ArrowDown');L('after DOWN '+foc())},3500);setTimeout(function(){key(40,'ArrowDown');L('after DOWN2 '+foc())},4500)}
 var opened=false,keep={Music:1,Settings:1,Search:1};
 function guide(){
   var es=document.querySelectorAll('ytlr-guide-entry-renderer');
   es.forEach(function(e){var t=(e.textContent||'').trim();if(t&&!keep[t])e.style.display='none'});
-  if(!opened&&es.length&&(location.hash===''||location.hash==='#/'||/^#\/(home|browse\?c=FEwhat_to_watch)/.test(location.hash))){opened=true;var last=+(sessionStorage.getItem('mrel')||0);if(Date.now()-last>60000){sessionStorage.setItem('mrel',Date.now());location.hash='#/browse?c=FEtopics_music';setTimeout(function(){location.reload()},300)}}
+  if(!opened&&es.length&&(location.hash===''||location.hash==='#/')){opened=true;keyseq()}
 }
 setInterval(function(){try{guide()}catch(e){L('guide err '+e)}},1000);setInterval(function(){try{tick()}catch(e){L('tick err '+e)}},1500);L('music.js ok');
 L('music.js ok');
