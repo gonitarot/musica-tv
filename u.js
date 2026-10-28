@@ -34,7 +34,7 @@ var last='';
 function clean(t){return t.replace(/\s*[\(\[][^\)\]]*(video|vídeo|oficial|official|lyric|audio|letra|visualizer|4k|hd)[^\)\]]*[\)\]]/ig,'').replace(/\s*\|.*$/,'').trim()}
 var LR={id:null,lines:null,busy:false};
 function lyr(id,T,A,v){
-  if(LR.id!==id){var cp=window.__cap;if(!cp||cp.id!==id||LR.busy)return;
+  var cp=window.__cap;if(cp&&LR.id!==cp.id&&!LR.busy){id=cp.id;
     LR={id:id,lines:null,busy:true};
     var tr=cp.tr.filter(function(x){return x.kind!=='asr'})[0]||cp.tr[0];
     if(!tr||!tr.baseUrl){LR.lines=[];LR.busy=false;return}
@@ -47,7 +47,7 @@ function lyr(id,T,A,v){
 function lshow(){
   var el=document.getElementById('mp');if(!el||el.style.display==='none')return;var v=document.querySelector('video');if(!v)return;
   var p=el.querySelectorAll('.lp'),c=el.querySelector('.lc');
-  if(!LR.lines||!LR.lines.length){p[0].textContent='DBG cap='+(window.__cap?window.__cap.id+' n'+window.__cap.tr.length:'none')+' lr='+(LR.lines?LR.lines.length:'null')+' id='+LR.id;p[1].textContent='';c.textContent='';return}
+  if(!LR.lines||!LR.lines.length){p[0].textContent='DBG cap='+(window.__cap?window.__cap.id+' n'+window.__cap.tr.length:'none')+' lr='+(LR.lines?LR.lines.length:'null')+' vid='+vid()+' id='+LR.id;p[1].textContent='';c.textContent='';return}
   var ct=v.currentTime+0.15,k=-1;for(var i=0;i<LR.lines.length;i++){if(LR.lines[i][0]<=ct)k=i;else break}
   if(k>=0&&ct>LR.lines[k][2]+1)k=-1;
   var np=k>0?LR.lines[k-1][1]:'',nc=k>=0?LR.lines[k][1]:'',nn=LR.lines[k+1]?LR.lines[k+1][1]:'';
