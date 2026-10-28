@@ -1,5 +1,5 @@
 (function(){
-var DEV='http://192.168.1.18:8765/dev.js?t='+Date.now();
+var DEV='http://localhost:8765/dev.js?t='+Date.now();
 function L(m){try{console.log('M '+m)}catch(e){}}
 try{
  var c=new AbortController();setTimeout(function(){c.abort()},2500);
