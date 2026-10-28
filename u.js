@@ -85,6 +85,7 @@ function guide(){
   es.forEach(function(e){var t=(e.textContent||'').trim();if(t&&!keep[t])e.style.display='none'});
 }
 setInterval(function(){try{guide()}catch(e){L('guide err '+e)}},1000);setInterval(function(){try{tick()}catch(e){L('tick err '+e)}},1500);L('music.js ok');
+setTimeout(function(){['http://localhost:8099/','http://localhost:8099/cors-bypass/https://www.youtube.com/generate_204','http://localhost:8099/cors-bypass/https://sponsor.ajay.app/api/status','http://localhost:8099/cors-bypass/https://lrclib.net/api/get?artist_name=a&track_name=b'].forEach(function(u,i){fetch(u).then(function(r){L('T'+i+' '+r.status)}).catch(function(e){L('T'+i+' err '+e)})})},6000);
 L('music.js ok');
 })();
 
