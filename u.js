@@ -1,6 +1,6 @@
 (function(){
 if(window.__musica)return;window.__musica=1;
-function L(m){try{console.error('M '+m);var d=document.getElementById('mdbg');if(!d&&document.body){d=document.createElement('div');d.id='mdbg';d.style.cssText='position:fixed;left:0;top:0;z-index:99999;background:#c00;color:#fff;font:20px monospace;padding:4px;max-width:900px';document.body.appendChild(d)}if(d)d.textContent=String(m).slice(0,200)}catch(e){}}
+function L(m){try{console.error('M '+m)}catch(e){}}
 var css=`
 #mp{position:fixed;inset:0;z-index:9999;display:none;overflow:hidden;background:#0b0b0f;font-family:Roboto,Arial,sans-serif;color:#fff}
 #mp .bg{position:absolute;inset:-60px;background-size:cover;background-position:center;filter:blur(60px) saturate(1.6) brightness(.55);transform:scale(1.15);transition:background-image .6s}
@@ -57,14 +57,9 @@ setInterval(tick,500);
 // solo musica: oculta el resto del menu y abre Musica
 var opened=false,keep={Music:1,Settings:1,Search:1};
 function guide(){
-  var es=document.querySelectorAll('ytlr-guide-entry-renderer');if(!window.__gd||Date.now()-window.__gd>3000){window.__gd=Date.now();var tx=[];es.forEach(function(e){tx.push((e.textContent||'').trim().slice(0,12))});L('entries '+es.length+' '+tx.join('|')+' '+location.hash)}
-  if(!es.length)return;
-  var mus=null;
-  es.forEach(function(e){var t=(e.textContent||'').trim();
-    if(keep[t]){if(t==='Music')mus=e;e.style.display='';}
-    else if(t&&t!==''&&!e.querySelector('ytlr-avatar-lockup')&&!/^\s*$/.test(t)&&t!==document.title){e.style.display='none'}
-  });
-  if(!opened&&mus&&!/watch/.test(location.hash)&&!window.__musOpen){opened=true;window.__musOpen=1;setTimeout(function(){try{mus.click();L('click Music')}catch(e){L('click err '+e)}},1500)}
+  var es=document.querySelectorAll('ytlr-guide-entry-renderer');
+  es.forEach(function(e){var t=(e.textContent||'').trim();if(t&&!keep[t])e.style.display='none'});
+  if(!opened&&es.length&&(location.hash===''||location.hash==='#/'||/^#\/(home|browse\?c=FEwhat_to_watch)/.test(location.hash))){opened=true;location.hash='#/browse?c=FEtopics_music';L('open music')}
 }
 setInterval(function(){try{guide()}catch(e){L('guide err '+e)}},1000);setInterval(function(){try{tick()}catch(e){L('tick err '+e)}},1500);L('music.js ok');
 L('music.js ok');
