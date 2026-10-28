@@ -1,3 +1,0 @@
-console.log('MDEV loaded');
-(function(){var n=0;function b(){try{if(!document.body)return;var d=document.getElementById('mbanner');if(!d){d=document.createElement('div');d.id='mbanner';d.style.cssText='position:fixed;top:0;left:0;z-index:99999;background:red;color:#fff;font:40px sans-serif;padding:8px';document.body.appendChild(d)}d.textContent='MUSICA OK '+(++n)}catch(e){console.log('MERR '+e)}}setInterval(b,1000)})();
-fetch('https://cdn.jsdelivr.net/npm/@foxreis/tizentube/dist/userScript.js').then(function(r){return r.text()}).then(function(t){console.log('MDEV orig len '+t.length);(0,eval)(t);console.log('MDEV orig evaled')}).catch(function(e){console.log('MDEV orig err '+e)});
