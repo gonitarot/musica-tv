@@ -23,7 +23,8 @@ function mount(){
   if(!st.parentNode)document.head.appendChild(st);
   if(!document.getElementById('mp')){
     var d=document.createElement('div');d.id='mp';
-    d.innerHTML='<div class="bg"></div><div class="shade"></div><div class="wrap"><div class="art"></div><div class="info"><div class="t"></div><div class="a"></div><div class="bar"><i></i></div><div class="tm"><span class="c">0:00</span><span class="d">0:00</span></div><div class="st"></div><div class="ly"></div></div></div>';
+    function E(c,p){var x=document.createElement('div');x.className=c;p.appendChild(x);return x}
+    E('bg',d);E('shade',d);var w=E('wrap',d);E('art',w);var i=E('info',w);E('t',i);E('a',i);var br=E('bar',i);br.appendChild(document.createElement('i'));var tm=E('tm',i);var c=document.createElement('span');c.className='c';c.textContent='0:00';var dd=document.createElement('span');dd.className='d';dd.textContent='0:00';tm.appendChild(c);tm.appendChild(dd);E('st',i);E('ly',i);
     document.body.appendChild(d);
   }
   return true;
@@ -56,7 +57,7 @@ setInterval(tick,500);
 // solo musica: oculta el resto del menu y abre Musica
 var opened=false,keep={Music:1,Settings:1,Search:1};
 function guide(){
-  var es=document.querySelectorAll('ytlr-guide-entry-renderer');L('entries '+es.length+' hash '+location.hash);
+  var es=document.querySelectorAll('ytlr-guide-entry-renderer');if(!window.__gd||Date.now()-window.__gd>3000){window.__gd=Date.now();var tx=[];es.forEach(function(e){tx.push((e.textContent||'').trim().slice(0,12))});L('entries '+es.length+' '+tx.join('|')+' '+location.hash)}
   if(!es.length)return;
   var mus=null;
   es.forEach(function(e){var t=(e.textContent||'').trim();
