@@ -69,7 +69,6 @@ function tick(){
   el.querySelector('.c').textContent=f(v.currentTime);el.querySelector('.d').textContent=f(v.duration);
   el.querySelector('.art').style.transform=v.paused?'scale(.9)':'none';
   el.querySelector('.st').textContent=v.paused?'Pausado':'Reproduciendo';
-  if(!window.__dd||Date.now()-window.__dd>2000){window.__dd=Date.now();var wp=document.querySelector('ytlr-watch-page');var tx=[];if(wp){var w2=document.createTreeWalker(wp,NodeFilter.SHOW_TEXT);var n2;while((n2=w2.nextNode())&&tx.length<8){var t2=n2.nodeValue.trim();if(t2.length>2)tx.push(t2.slice(0,40))}}L('wtxt='+tx.join(' | '));var tg={};document.querySelectorAll('*').forEach(function(e){if(e.tagName.indexOf('YTLR')==0)tg[e.tagName.slice(5).toLowerCase()]=1});L('raw='+window.__vdraw+' tags='+Object.keys(tg).filter(function(k){return /watch|player|title|meta|lyric|queue/.test(k)}).join(',')+' tick id='+id+' h='+location.hash.slice(0,60)+' vd='+JSON.stringify(vd).slice(0,80)+' ct='+Math.round(v.currentTime)+' dur='+Math.round(v.duration))}
 }
 setInterval(tick,500);
 // solo musica: oculta el resto del menu y abre Musica
