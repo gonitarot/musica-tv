@@ -54,7 +54,8 @@ setInterval(tick,500);
 // solo musica: oculta el resto del menu y abre Musica
 function key(code,name){['keydown','keyup'].forEach(function(t){var e=new KeyboardEvent(t,{key:name,code:name,keyCode:code,which:code,bubbles:true,cancelable:true});try{Object.defineProperty(e,'keyCode',{get:function(){return code}});Object.defineProperty(e,'which',{get:function(){return code}})}catch(x){}(document.activeElement||document.body).dispatchEvent(e)})}
 function foc(){var f=document.querySelector('[class*=zylon-focus],[class*=focused]');var a=document.activeElement;return (f?f.tagName.slice(0,22)+':'+(f.textContent||'').trim().slice(0,14):'nofocusel')+' act='+(a?a.tagName.slice(0,22):'')}
-function keyseq(){var t=2500;setTimeout(function(){key(37,'ArrowLeft')},t);t+=1500;for(var i=0;i<4;i++){(function(){setTimeout(function(){key(40,'ArrowDown')},t)})();t+=800}t+=800;setTimeout(function(){key(13,'Enter')},t)}
+function fg(){var es=document.querySelectorAll('ytlr-guide-entry-renderer');for(var i=0;i<es.length;i++){var els=[es[i]].concat([].slice.call(es[i].querySelectorAll('*')).slice(0,8));for(var j=0;j<els.length;j++){var c=getComputedStyle(els[j]).backgroundColor;var m=/rgba?\((\d+), (\d+), (\d+)(?:, ([\d.]+))?/.exec(c);if(m&&+m[1]+ +m[2]+ +m[3]>600&&(m[4]===undefined||+m[4]>0.5))return (es[i].textContent||'').trim()}}return null}
+function keyseq(){var step=0;setTimeout(function(){key(37,'ArrowLeft');var iv=setInterval(function(){step++;var f=fg();L('step '+step+' focus='+f);if(f==='Music'){clearInterval(iv);setTimeout(function(){key(13,'Enter');L('enter')},500)}else if(step>14){clearInterval(iv)}else key(40,'ArrowDown')},900)},2500)}
 var T0=Date.now(),navDone=false,opened=false,keep={Music:1,Settings:1,Search:1};
 function guide(){
   var es=document.querySelectorAll('ytlr-guide-entry-renderer');
