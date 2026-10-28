@@ -47,7 +47,7 @@ function lyr(id,T,A,v){
 function lshow(){
   var el=document.getElementById('mp');if(!el||el.style.display==='none')return;var v=document.querySelector('video');if(!v)return;
   var p=el.querySelectorAll('.lp'),c=el.querySelector('.lc');
-  if(!LR.lines||!LR.lines.length){p[0].textContent='';p[1].textContent='';c.textContent='';return}
+  if(!LR.lines||!LR.lines.length){p[0].textContent='DBG cap='+(window.__cap?window.__cap.id+' n'+window.__cap.tr.length:'none')+' lr='+(LR.lines?LR.lines.length:'null')+' id='+LR.id;p[1].textContent='';c.textContent='';return}
   var ct=v.currentTime+0.15,k=-1;for(var i=0;i<LR.lines.length;i++){if(LR.lines[i][0]<=ct)k=i;else break}
   if(k>=0&&ct>LR.lines[k][2]+1)k=-1;
   var np=k>0?LR.lines[k-1][1]:'',nc=k>=0?LR.lines[k][1]:'',nn=LR.lines[k+1]?LR.lines[k+1][1]:'';
