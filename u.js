@@ -1,6 +1,6 @@
 (function(){
 if(window.__musica)return;window.__musica=1;
-function L(m){try{console.error('M '+m);var d=document.getElementById('mdbg');if(!d&&document.body){d=document.createElement('div');d.id='mdbg';d.style.cssText='position:fixed;left:0;top:0;z-index:99999;background:#c00;color:#fff;font:18px monospace;padding:3px;max-width:1000px';document.body.appendChild(d)}if(d)d.textContent=String(m).slice(0,220)}catch(e){}}
+var LG=[];function L(m){try{console.error('M '+m);LG.push(String(m).slice(0,160));if(LG.length>4)LG.shift();var d=document.getElementById('mdbg');if(!d&&document.body){d=document.createElement('div');d.id='mdbg';d.style.cssText='position:fixed;left:0;bottom:0;z-index:99999;background:#c00;color:#fff;font:18px monospace;padding:3px;max-width:1300px;white-space:pre-wrap';document.body.appendChild(d)}if(d)d.textContent=LG.join('\n')}catch(e){}}
 var CSS={
 mp:'position:fixed;left:0;top:0;right:0;bottom:0;z-index:9999;display:none;overflow:hidden;background:#0b0b0f;font-family:Roboto,Arial,sans-serif;color:#fff',
 bg:'position:absolute;left:-80px;top:-80px;right:-80px;bottom:-80px;background-size:cover;background-position:center;filter:blur(60px) saturate(1.6) brightness(.55)',
@@ -52,9 +52,9 @@ function tick(){
 }
 setInterval(tick,500);
 // solo musica: oculta el resto del menu y abre Musica
-function key(code,name){['keydown','keyup'].forEach(function(t){var e=new KeyboardEvent(t,{key:name,code:name,keyCode:code,which:code,bubbles:true,cancelable:true});try{Object.defineProperty(e,'keyCode',{get:function(){return code}});Object.defineProperty(e,'which',{get:function(){return code}})}catch(x){}(document.activeElement||document.body).dispatchEvent(e);document.dispatchEvent(new KeyboardEvent(t,{key:name,keyCode:code,which:code,bubbles:true}))})}
+function key(code,name){['keydown','keyup'].forEach(function(t){var e=new KeyboardEvent(t,{key:name,code:name,keyCode:code,which:code,bubbles:true,cancelable:true});try{Object.defineProperty(e,'keyCode',{get:function(){return code}});Object.defineProperty(e,'which',{get:function(){return code}})}catch(x){}(document.activeElement||document.body).dispatchEvent(e)})}
 function foc(){var f=document.querySelector('[class*=zylon-focus],[class*=focused]');var a=document.activeElement;return (f?f.tagName.slice(0,22)+':'+(f.textContent||'').trim().slice(0,14):'nofocusel')+' act='+(a?a.tagName.slice(0,22):'')}
-function keyseq(){var t=2500;setTimeout(function(){key(37,'ArrowLeft')},t);t+=1000;for(var i=0;i<4;i++){(function(){setTimeout(function(){key(40,'ArrowDown')},t)})();t+=600}t+=700;setTimeout(function(){key(13,'Enter');L('enter sent')},t)}
+function keyseq(){var t=2500;setTimeout(function(){key(37,'ArrowLeft')},t);t+=1200;for(var i=0;i<4;i++){(function(){setTimeout(function(){key(40,'ArrowDown')},t)})();t+=700}t+=800;setTimeout(function(){key(13,'Enter')},t)}
 var opened=false,keep={Music:1,Settings:1,Search:1};
 function guide(){
   var es=document.querySelectorAll('ytlr-guide-entry-renderer');
