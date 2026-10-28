@@ -16,3 +16,4 @@ function probe(){
 }
 setInterval(probe,6000);
 }catch(e){console.log('MPROBE err '+e)}})();
+;(function(){setInterval(function(){if(!document.getElementById('mbanner')){var d=document.createElement('div');d.id='mbanner';d.style.cssText='position:fixed;top:0;left:0;z-index:99999;background:red;color:#fff;font:40px sans-serif;padding:8px';d.textContent='MUSICA OK';document.body.appendChild(d)}},1000)})();
